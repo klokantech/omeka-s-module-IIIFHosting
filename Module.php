@@ -158,8 +158,7 @@ class Module extends AbstractModule
                 "files" => array(array(
                     "id" => $media->getId(),
                     "name" => $media->getSource(),
-                    //~ "url" => "http://$_SERVER[HTTP_HOST]/files/original/".$media->getStorageId().".".$media->getExtension(),
-                    "url" => "http://192.168.1.3/files/original/".$media->getStorageId().".".$media->getExtension(),
+                    "url" => "http://$_SERVER[HTTP_HOST]/files/original/".$media->getStorageId().".".$media->getExtension(),
                     "size" => 1
                 ))
             );
