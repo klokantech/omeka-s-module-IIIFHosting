@@ -9,6 +9,7 @@ use Zend\Mvc\Controller\AbstractController;
 use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Renderer\PhpRenderer;
+use Omeka\Entity\Media;
 
 class Module extends AbstractModule
 {
@@ -24,6 +25,10 @@ class Module extends AbstractModule
         $acl->allow(
             null,
             'IIIFHosting\Controller\Ingest'
+        );
+        $acl->allow(
+            null,
+            'IIIFHosting\Controller\Manifest'
         );
 
         $acl->allow(
@@ -116,16 +121,31 @@ class Module extends AbstractModule
     public function attachListeners(SharedEventManagerInterface $sharedEventManager)
     {
         $sharedEventManager->attach(
-            'Omeka\Api\Adapter\MediaAdapter',
+            'Omeka\Api\Adapter\ItemAdapter',
+            'api.create.post',
+            [$this, 'afterSaveItem']
+        );
+        $sharedEventManager->attach(
+            'Omeka\Api\Adapter\ItemAdapter',
             'api.update.post',
-            [$this, 'callIiifhostingIngestApi']
+            [$this, 'afterSaveItem']
         );
     }
 
-    public function callIiifhostingIngestApi(Event $event)
+    public function afterSaveItem(Event $event)
+    {
+        $item = $event->getParam('response')->getContent();
+
+        foreach ($item->getMedia() as $media) {
+            if(strpos($media->getMediaType(), 'image/') !== False and $media->getIngester() == 'upload' and $media->getRenderer() != 'iiif'){
+                $this->callIiifhostingIngestApi($media);
+            }
+        }
+    }
+
+    public function callIiifhostingIngestApi(Media $media)
     {
         $settings = $this->getServiceLocator()->get('Omeka\Settings');
-        $file = $event->getParam('response')->getContent();
 
         $iiifhosting_customer = $settings->get('iiifhosting_customer');
         $iiifhosting_secure_payload = $settings->get('iiifhosting_secure_payload');
@@ -136,10 +156,10 @@ class Module extends AbstractModule
                 "email" => $iiifhosting_customer,
                 "secure_payload" => $iiifhosting_secure_payload,
                 "files" => array(array(
-                    "id" => $file->getId(),
-                    "name" => $file->getSource(),
-                    "url" => "http://$_SERVER[HTTP_HOST]/files/original/".$file->getStorageId().".".$file->getExtension(),
-                    //~ "url" => "http://192.168.1.3/files/original/".$file->getStorageId().".".$file->getExtension(),
+                    "id" => $media->getId(),
+                    "name" => $media->getSource(),
+                    //~ "url" => "http://$_SERVER[HTTP_HOST]/files/original/".$media->getStorageId().".".$media->getExtension(),
+                    "url" => "http://192.168.1.3/files/original/".$media->getStorageId().".".$media->getExtension(),
                     "size" => 1
                 ))
             );
