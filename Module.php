@@ -10,6 +10,7 @@ use Zend\Mvc\MvcEvent;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\View\Renderer\PhpRenderer;
 use Omeka\Entity\Media;
+use Omeka\Mvc\Controller\Plugin\Messenger;
 
 class Module extends AbstractModule
 {
@@ -111,7 +112,8 @@ class Module extends AbstractModule
             $result = @file_get_contents("https://admin.iiifhosting.com/configure_webhook/", False, $ctx);
 
             if($result === FALSE){
-                 //~ Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger')->addMessage("Error in communication with IIIF Hosting server.", 'error');
+                $messenger = new Messenger;
+                $messenger->addError("Error in communication with IIIF Hosting server.");
             }
         }
 
@@ -176,7 +178,8 @@ class Module extends AbstractModule
             $result = @file_get_contents($iiifhosting_ingest_api, False, $ctx);
 
             if($result === FALSE){
-                 //~ $this->messenger()->addError('Error in communication with IIIF Hosting server.');
+                $messenger = new Messenger;
+                $messenger->addError("Error in communication with IIIF Hosting server.");
             }
         }
     }
