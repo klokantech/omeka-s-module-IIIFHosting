@@ -25,6 +25,6 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./:/var/www/html/modules/IIIFHosting/
+      - ./module/:/var/www/html/modules/IIIFHosting/
     restart: always
 
