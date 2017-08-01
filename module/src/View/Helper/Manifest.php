@@ -15,7 +15,7 @@ class Manifest extends AbstractHelper
         $CONTEXT_PRESENTATION = "http://iiif.io/api/presentation/2/context.json";
         $CONTEXT_IMAGE = "http://iiif.io/api/image/2/context.json";
         $PROFILE_IMAGE = "http://iiif.io/api/image/2/level2.json";
-        $BASE_URI = "http://$_SERVER[HTTP_HOST]" . $item->siteUrl($canonical = true);
+        $BASE_URI = "http://$_SERVER[HTTP_HOST]" . $item->siteUrl();
         $MANIFEST_URI     = $BASE_URI ."/manifest.json";
         $SEQUENCE_URI     = $BASE_URI . "/sequence.json";
         $CANVAS_BASE_URI  = $BASE_URI . "/canvas/";

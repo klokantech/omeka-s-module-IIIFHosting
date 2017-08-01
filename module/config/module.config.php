@@ -24,17 +24,21 @@ return [
                     ],
                 ],
             ],
-            'iiif_manifest' => [
-                'type' => 'Segment',
-                'options' => [
-                    'route' => '/:id/manifest.json',
-                    'constraints' => [
-                        'id' => '\d+',
-                    ],
-                    'defaults' => [
-                        '__NAMESPACE__' => 'IIIFHosting\Controller',
-                        'controller' => 'Manifest',
-                        'action' => 'manifest',
+            'site' => [
+                'child_routes' => [
+                    'iiif_manifest' => [
+                        'type' => 'Segment',
+                        'options' => [
+                            'route' => '/item/:id/manifest.json',
+                            'constraints' => [
+                                'id' => '\d+',
+                            ],
+                            'defaults' => [
+                                '__NAMESPACE__' => 'IIIFHosting\Controller',
+                                'controller' => 'Manifest',
+                                'action' => 'manifest',
+                            ],
+                        ],
                     ],
                 ],
             ],
