@@ -87,11 +87,24 @@ class Manifest extends AbstractHelper
 
         $sequences = $sequences['sequences'] + $canvases;
 
+        $metadata = [];
+        foreach ($item->values() as $term => $value) {
+            $metadata[] = (object) [
+                'label' => $value['alternate_label'] ?: $value['property']->label(),
+                'value' => count($value['values']) > 1
+                    ? array_map('strval', $value['values'])
+                    : (string) reset($value['values']),
+            ];
+        }
+
         $manifest = array(
                 "@context"  => $CONTEXT_PRESENTATION,
                 "@id"       => $MANIFEST_URI,
                 "@type"     => "sc:Manifest",
                 "label"     => $item->displayTitle(),
+                "metadata"  => $metadata,
+                "logo"      => $this->view->setting('iiif_manifest_logo'),
+                "licence"   => $this->view->setting('iiif_manifest_licence'),
                 "sequences" => array($sequences)
         );
 

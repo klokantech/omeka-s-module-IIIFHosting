@@ -41,5 +41,27 @@ class ConfigForm extends Form
                 'required' => true,
             ],
         ]);
+        $this->add([
+            'type' => 'text',
+            'name' => 'manifest_logo',
+            'options' => [
+                'label' => 'URL for logo in manifest', // @translate
+                'info' => 'Enter the URL of manifest logo', // @translate
+            ],
+            'attributes' => [
+                'required' => false,
+            ],
+        ]);
+        $this->add([
+            'type' => 'text',
+            'name' => 'manifest_licence',
+            'options' => [
+                'label' => 'URL for manifest licence', // @translate
+                'info' => 'Enter the URL of manifest licence', // @translate
+            ],
+            'attributes' => [
+                'required' => false,
+            ],
+        ]);
     }
 }
