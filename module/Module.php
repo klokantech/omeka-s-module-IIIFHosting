@@ -52,7 +52,7 @@ class Module extends AbstractModule
         $settings->delete('iiifhosting_secure_payload');
         $settings->delete('iiifhosting_ingest_api');
         $settings->delete('iiif_manifest_logo');
-        $settings->delete('iiif_manifest_licence');
+        $settings->delete('iiif_manifest_license');
     }
 
     public function getConfigForm(PhpRenderer $renderer)
@@ -71,7 +71,7 @@ class Module extends AbstractModule
             'secure_payload' => $settings->get('iiifhosting_secure_payload'),
             'ingest_api' => $iiifhosting_ingest_api,
             'manifest_logo' => $settings->get('iiif_manifest_logo'),
-            'manifest_licence' => $settings->get('iiif_manifest_licence'),
+            'manifest_license' => $settings->get('iiif_manifest_license'),
         ]);
         return $renderer->formCollection($form, false);
     }
@@ -92,13 +92,13 @@ class Module extends AbstractModule
         $iiifhosting_secure_payload = $formData['secure_payload'];
         $iiifhosting_ingest_api = $formData['ingest_api'];
         $iiif_manifest_logo = $formData['manifest_logo'];
-        $iiif_manifest_licence = $formData['manifest_licence'];
+        $iiif_manifest_license = $formData['manifest_license'];
 
         $settings->set('iiifhosting_customer', $iiifhosting_customer);
         $settings->set('iiifhosting_secure_payload', $iiifhosting_secure_payload);
         $settings->set('iiifhosting_ingest_api', $iiifhosting_ingest_api);
         $settings->set('iiif_manifest_logo', $iiif_manifest_logo);
-        $settings->set('iiif_manifest_licence', $iiif_manifest_licence);
+        $settings->set('iiif_manifest_license', $iiif_manifest_license);
 
 
         if ($iiifhosting_customer and $iiifhosting_secure_payload and $iiifhosting_ingest_api){

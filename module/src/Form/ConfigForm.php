@@ -54,10 +54,10 @@ class ConfigForm extends Form
         ]);
         $this->add([
             'type' => 'text',
-            'name' => 'manifest_licence',
+            'name' => 'manifest_license',
             'options' => [
-                'label' => 'URL for manifest licence', // @translate
-                'info' => 'Enter the URL of manifest licence', // @translate
+                'label' => 'URL for manifest license', // @translate
+                'info' => 'Enter the URL of manifest license', // @translate
             ],
             'attributes' => [
                 'required' => false,

@@ -104,7 +104,7 @@ class Manifest extends AbstractHelper
                 "label"     => $item->displayTitle(),
                 "metadata"  => $metadata,
                 "logo"      => $this->view->setting('iiif_manifest_logo'),
-                "licence"   => $this->view->setting('iiif_manifest_licence'),
+                "license"   => $this->view->setting('iiif_manifest_license'),
                 "sequences" => array($sequences)
         );
 
