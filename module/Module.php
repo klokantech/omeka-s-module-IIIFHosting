@@ -59,7 +59,7 @@ class Module extends AbstractModule
         $iiifhosting_ingest_api = $settings->get('iiifhosting_ingest_api');
 
         if ($iiifhosting_ingest_api == ''){
-            $iiifhosting_ingest_api = 'https://admin.iiifhosting.com/ingest/';
+            $iiifhosting_ingest_api = 'https://admin.iiifhosting.com/api/v1/ingest/';
         }
 
         $form = new ConfigForm;
@@ -109,7 +109,7 @@ class Module extends AbstractModule
                 )
             ));
 
-            $result = @file_get_contents("https://admin.iiifhosting.com/configure_webhook/", False, $ctx);
+            $result = @file_get_contents("https://admin.iiifhosting.com/api/v1/configure_webhook/", False, $ctx);
 
             if($result === FALSE){
                 $messenger = new Messenger;
